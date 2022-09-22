@@ -1,4 +1,13 @@
-const client = require('./db');//assume it refers to index.js within the folder
+const client = require('./DB');//assume it refers to index.js within the folder
+
+/*const userDB = require('./DB/users');
+const createDemoUser = userDB.createDemoUser();
+const getAllUsers  = userDB.getAllUsers();*/
+//above is equivalent to below
+const { createDemoUser, 
+        getAllUsers} = require('./DB/users');
+        
+
 
 const rebuildDB = async () => {
     //delete table 
@@ -13,19 +22,21 @@ const rebuildDB = async () => {
         );
     `)
     //create row into table
-    await client.query(`
+    /*await client.query(`
         INSERT INTO demo(name)
         VALUES('Cooper');
     `)
     await client.query(`
         INSERT INTO demo(name)
         VALUES('Ben');
-    `)
-    //grab info from table
-    const data = await client.query(`
-        SELECT * FROM demo;
-    `);
-    console.log(data.rows);
-};
+    `)*/
+    createDemoUser('kiwi');
+    createDemoUser('iZZY');
 
+    //grab info from table
+    const data = getAllUsers();
+    console.log(data.rows);
+    
+    
+}
 rebuildDB();
